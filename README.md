@@ -1,0 +1,1 @@
+Hallo Herr Windisch, hier finden sie die vollständige Implementation des Algorithmus mit allen Beispielaufgaben. Sie können einfach alle Dateien herunterladen und ausführen. Wenn etwas nicht funktionieren sollte oder sie fragen haben, schreiben sie mir auf Lernsax. Viele Grüße, Jurek Engelmann
