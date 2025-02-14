@@ -1,0 +1,106 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{lmodern}  
+\usepackage{microtype} 
+\usepackage{newtxtext,newtxmath}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{calc, angles, quotes, intersections}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage[labelfont=bf]{caption}
+\usepackage[ngerman]{babel}
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+\usepackage[backend=biber]{biblatex}
+\addbibresource{literature.bib}
+
+
+\onehalfspacing
+
+\titleformat{\section}{\fontsize{14pt}{16pt}\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\fontsize{13}{15}\bfseries}{\thesubsection}{1em}{}
+
+\geometry{a4paper, left=3cm, right=3cm, top=2.5cm, bottom=2.5cm}
+
+
+\title{Komplexe Leistung}
+\author{Jurek Engelmann}
+
+\begin{document}
+
+\pagenumbering{gobble} % Unterdrückt die Seitennummerierung
+
+\begin{titlepage}
+	\centering
+
+	Schule am Palmengarten\\
+		Gymnasium der Stadt Leipzig\\
+		Karl-Heine-Str. 22b\\
+		04229 Leipzig\\[1.5cm]
+	
+	\large Schuljahr 2024/2025\\[1.5cm]
+	
+	Komplexe Leistung mit Präsentation\\[1.5cm]
+
+	\huge\textbf{Geometrische Bestimmung linearer Pfade mit Laufzeitoptimierung am Beispiel von Krocket}\\[0.5cm]
+	\Large\textit{4. Aufgabe des 43. Bundeswettbewerbs Informatik}\\[2cm]
+
+	\large Jurek Max Engelmann\\
+	Klasse 10/4\\[1.5cm]
+
+	Informatik\\[1cm]
+
+	Betreuende Fachlehrkraft:\\
+	Herr Windisch\\[1cm]
+	
+
+	\normalsize
+	eingereicht am: 14.02.2025
+	
+\end{titlepage}
+
+\renewcommand{\contentsname}{Inhaltsverzeichnis}
+\tableofcontents
+\newpage
+
+
+\pagenumbering{arabic} 
+\setcounter{page}{1}  
+
+\include{einleitung}
+
+\include{aufgabenbeschreibung}
+
+\include{beobachtungen}
+
+\include{aufbau_algo}
+
+\include{winkeltest}
+
+\include{orientierungstest}
+
+\include{verzerrte_ebene}
+
+\include{schusspfad}
+
+\include{umsetzung}
+
+\include{schluss}
+
+\printbibliography[heading=bibnumbered]
+\newpage
+\thispagestyle{empty}
+\include{selbst}
+
+\end{document}

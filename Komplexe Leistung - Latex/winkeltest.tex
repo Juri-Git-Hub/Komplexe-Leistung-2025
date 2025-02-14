@@ -1,0 +1,56 @@
+\subsection{Winkeltest}
+\label{sec:winkeltest}
+
+Der Winkeltest ist ein Tool, um die Reihenfolge von Toren zu überprüfen. Um dies zu testen werden alle Tore in ihrer möglichen lr-Konfiguration benötigt (Input), weil die lr-Konfiguration eines Tors die Richtung angibt, durch die das Tor durchschossen werden muss (vgl. \ref{sec:beobachtungen}). Der Winkeltest verarbeitet diese lr-Konfiguration und liefert als Ergebnis, ob alle Tore in der richtigen Reihenfolge liegen.
+
+\subsubsection{Winkelberechnung}
+Um die Reihenfolge der Tore zu überprüfen, werden für jeden Pfosten zwei Winkel betrachtet und berechnet (\hyperref[fig:winkeltest]{Abb. 4}):
+\begin{enumerate}
+	\item \textbf{Winkel $\lambda$ am linken Pfosten:} Zuerst wird der Winkel zwischen der Verbindungslinie vom linken Pfosten des aktuellen Tors zum rechten Pfosten desselben Tors und der Verbindungslinie vom rechten Pfosten des aktuellen Tors zum linken Pfosten des folgenden Tors gemessen.
+	\item \textbf{Winkel $\rho$ am rechten Pfosten:} Zuerst wird der Winkel zwischen der Verbindungslinie vom rechten Pfosten des aktuellen Tors zum linken Pfosten desselben Tors und der Verbindungslinie vom linken Pfosten des aktuellen Tors zum rechten Pfosten des folgenden Tors gemessen.
+\end{enumerate}
+
+\begin{figure}[h]
+\centering
+\label{fig:winkeltest}
+		\begin{tikzpicture}[scale=2]
+
+		\coordinate (A) at (0.5,1);
+		\coordinate (B) at (1.5,0);
+
+		\coordinate (C) at (5,2);
+		\coordinate (D) at (5.2,0);
+		
+
+		\fill (A) circle (2pt) node[below left] {A};
+		\fill (B) circle (2pt) node[below right] {B};
+		\fill (C) circle (2pt) node[above left] {C};
+		\fill (D) circle (2pt) node[above right] {D};
+	
+		\draw[thick]  (A) -- (B);
+		\draw[thick] (C) -- (D);
+		
+		\draw[->, red, thick, dashed] (A) -- (C);
+		\draw[->, red, thick, dashed] (B) -- (D);
+		
+\draw pic[draw, angle eccentricity=1.2, angle radius=1cm, ultra thick, blue] 
+    {angle = B--A--C} node[thick, anchor=center, text=blue] at ($(A)!0.5!(C) + (-1.9,-0.65)$) {$\lambda$};
+
+\draw pic[draw, angle eccentricity=1.2, angle radius=1cm, ultra thick, blue] 
+    {angle = D--B--A} node[thick, anchor=center, text=blue] at ($(A)!0.5!(C) + (-1.2, -1.2)$) {$\rho$};
+
+
+	\end{tikzpicture}
+    \caption{Visualisierung der Winkelberechnung. Abgebildet sind zwei Tore (A,B) und (C,D). Der Winkeltest berechnet die Winkel $\lambda$ und $\rho$, um anschließend zu beurteilen, ob man durch beide Tore in der richtigen Reihenfolge schießen kann.}
+\end{figure}
+\newpage
+
+\subsubsection{Fallunterscheidung}
+Ausgehend von der Winkelberechnung ergeben sich drei Fälle, die im folgenden unterschieden werden:
+\begin{description}
+	\item[Fall 1:] Beide Winkel sind kleiner als \(180^\circ\). Beide Pfosten des nächsten Tors liegen weiter rechts als die Pfosten des aktuell betrachteten Tors. Das nächste Tor liegt in der richtigen Richtung.
+	\item[Fall 2:] Beide Winkel sind größer als \(180^\circ\). Beide Pfosten des nächsten Tors liegen weiter links als die Pfosten des aktuell betrachteten Tors. Somit liegt das nächste Tor in der falschen Richtung, und ein Durchschuss aller Tore in der richtigen Reihenfolge ist unmöglich.
+	\item[Fall 3:] Ein Winkel ist größer, der andere kleiner als \(180^\circ\). Ein Pfosten des nächsten Tors liegt weiter links, der andere weiter rechts als das aktuell betrachtete Tor. Hieraus kann ein korrekter Durchschuss noch nicht ausgeschlossen werden.
+\end{description}
+
+Um für alle möglichen Torpositionen eine korrekte Beurteilung zu ermöglichen, muss die generelle Ausrichtung der Tore berücksichtigt werden – denn die Tore können auch von rechts nach links verlaufen. Wird entweder Fall 1 oder Fall 2 erstmals festgestellt, wird diese Information gespeichert. Tritt später der jeweils andere Fall auf, so ändert sich die Ausrichtung der Tore, und ein korrekter Durchschuss ist nicht mehr möglich.

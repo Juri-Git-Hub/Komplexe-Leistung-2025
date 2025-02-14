@@ -1,0 +1,17 @@
+\subsection{Aufbau des Algorithmus}
+Für das Lösen der Aufgabe ist eine Aufteilung des Algorithmus sinnvoll. 
+Der Algorithmus wird in zwei Teile geteilt:
+\begin{enumerate}
+    \item Im ersten Schritt überprüft der Algorithmus die Reihenfolge der Tore, um zu beurteilen, ob ein Durchschuss in der richtigen Reihenfolge überhaupt theoretisch möglich ist. Außerdem die lr-Konfiguration aller Tore gefunden werden, um so später ein Kanalpolygon erstellen zu können. Um diesen Punkt geht es in den Kapiteln \ref{sec:winkeltest} bis \ref{sec:ende_punkt_1}.
+
+    \item Im zweiten Schritt werden sogenannte Chokepoints gefunden. Das sind Punkte, die das Kanalpolygon besonders stark einschränken. Dabei werden viele, für die Lösung nicht relevante Pfosten, herausgefiltert. Diese Pfosten haben Eigenschaften, welche spätere Verfahren unmöglich machen würden. Außerdem sind spätere Berechnungen deutlich komplizierter und eine geringere Anzahl an Pfosten beschleunigt den Algorithmus. Punkt 2 behandeln die Kapitel \ref{sec:anfang_2} bis \ref{sec:ende_2}.
+
+    \item Im dritten Schritt muss der Algorithmus nach einer Geraden $g_1$ suchen, die durch alle Tore führt und einen Mindestabstand von dem Ballradius $r$ zu jedem Pfosten hat. In den Kapiteln \ref{sec:anfang_3} bis \ref{sec:ende_3} geht es um Punkt 3.
+
+
+\end{enumerate}
+
+
+Der Algorithmus für das Lösen der Aufgabe 4 des 43. Bundeswettbewerbs Informatik hat eine lineare Laufzeitkomplexität.
+Ein Algorithmus mit linearer Laufzeitkomplexität ist ein Algorithmus, dessen Laufzeit in direktem Verhältnis zur Größe der Eingabe steht, seine Laufzeit also in etwa proportional zu \(n\) wächst. Das bedeutet, dass wenn sich die Anzahl der zu verarbeitenden Elemente verdoppelt, sich auch der Rechenaufwand verdoppelt und damit auch die Ausführungszeit verdoppelt. Ein Beispiel ist das sequentielle Durchlaufen einer Liste, bei dem jedes Element genau einmal bearbeitet wird. Ein linearer Algorithmus wird als O(n) klassifiziert. \cite{Cormen2009}
+

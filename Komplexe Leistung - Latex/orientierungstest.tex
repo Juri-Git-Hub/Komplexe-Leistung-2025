@@ -1,0 +1,80 @@
+\subsection{Orientierungstest}
+Damit der Winkeltest funktioniert muss die lr-Konfiguration von jedem Tor bekannt sein. Diese Aufgabe übernimmt der Orientierungstest. Als Input nimmt der Orientierungstest alle Tore. Es wird über jedes Tor iteriert und die richtige lr-Konfiguration gespeichert. Der Orientierungstest gibt die lr-Konfiguration aller Tore zurück.
+
+\subsubsection{Der Algorithmus des Orientierungstests}
+Das Ziel des Orientierungstests besteht darin, alle Pfosten eindeutig als linke oder rechte Pfosten zu klassifizieren und somit die Durchschussrichtung aller Tore festzulegen. Im folgenden wird der Orientierungstest anhand von zwei Toren erläutert, dem vorherigen Tor \(t_{prev}\) und dem neuen Tor \(t_{neu}\).
+
+Für jeden Pfosten des vorherigen Tors werden alle möglichen Verbindungen zu den Pfosten des neuen Tors konstruiert. Dabei entstehen zwei Linienpaare, benannt nach den Pfosten:
+\[
+ll,\quad rr\quad\And\quad lr,\quad rl.
+\]
+Für beide Linienpaare wird überprüft, ob sich die Linien schneiden. Kreuzt sich ein Linienpaar, so ist in der jeweiligen lr-Konfiguration kein Durchschuss möglich. Es existiert jedoch stets mindestens ein Paar, das sich nicht überkreuzt – dieses Paar bestimmt die lr-Konfiguration für das neue Tor (\hyperref[fig:orientierungstest]{Abb. 5}).
+
+
+\begin{figure}[h]
+\centering
+\label{fig:orientierungstest}
+\begin{tikzpicture}[scale=2]
+
+	\coordinate (prevR) at (0,0);
+	\coordinate (prevL) at (0.5, 2.5); 
+	
+
+	\coordinate (newR) at (5, -0.5);   
+	\coordinate (newL) at (5, 3);  
+
+	\draw[thick] (prevL) -- (prevR);
+	\node[above left] at (prevL) {\(t_{prev}^{l}\)};
+	\node[below left] at (prevR) {\(t_{prev}^{r}\)};
+	
+	
+	\draw[thick] (newL) -- (newR);
+	\node[above right] at (newL) {\(t_{neu}^{l}\)};
+	\node[below right] at (newR) {\(t_{neu}^{r}\)};
+
+	\draw[blue, thick] (prevL) -- (newL) node[midway, above] {\(ll\)};
+	\draw[blue, thick] (prevR) -- (newR) node[midway, below] {\(rr\)};
+
+	\draw[red, dashed, thick] (prevL) -- (newR) node[midway, above right] {\(lr\)};
+	\draw[red, dashed, thick] (prevR) -- (newL) node[midway, above left] {\(rl\)};
+\end{tikzpicture}
+\caption{Visualisierung des Orientierungstests. Es sind zwei Tore \(t_{prev}\) und \(t_{neu}\) zu sehen. Ihre Pfosten sind durch die Linien \(ll, rr, lr\) und \(rl\) verbunden. Das Linienpaar \(lr\), \(rl\) besitzt einen Schnittpunkt, diese lr-Konfiguration ist also für das neue Tor nicht möglich. Die Linien \(ll\), \(rr\) schneiden sich nicht untereinander, diese lr-Konfiguration ist also die richtige und kann gespeichert werden.}
+\end{figure}
+
+
+\subsubsection{Sonderfall Bifurkation}
+\label{sec:ende_punkt_1}
+In manchen Fällen des Orientierungstests kann es dazu kommen, dass sich die Linien beider Paare nicht schneiden, was zu einer \emph{Bifurkation} (\hyperref[fig:bifurkation]{Abb. 6}), also einer Gabelung des Kanalpolygons, führt. Eine Bifurkation impliziert, dass das betreffende Tor in beide Richtungen durchschossen werden kann. Um solche Fälle zu filtern, wird der Winkeltest mit dem Orientierungstest kombiniert. Zunächst wird die lr-Konfiguration von \(t_0\) durch Testen beider Möglichkeiten initialisiert. Anschließend iteriert der Orientierungstest über jedes neue Tor und ermittelt alle möglichen lr-Konfigurationen zwischen benachbarten Toren. Der anschließende Winkeltest stellt sicher, dass die gewählte Konfiguration in dieselbe Schussrichtung wie die vorangegangenen Tore führt (mindestens ein Winkel muss kleiner als \(180^\circ\) sein). So wird in den folgenden Toren die richtige lr-Konfiguration für das Tor mit der Bifurkation gespeichert, da eine der beiden Schussrichtungen mit den folgenden Toren ausgeschlossen werden kann.
+
+\begin{figure}[h]
+\centering
+\label{fig:bifurkation}
+	\begin{tikzpicture}[scale=2]
+
+		\coordinate (prevR) at (0,0);   
+		\coordinate (prevL) at (0,4);    
+
+		\coordinate (newL) at (2,2);   
+		\coordinate (newR) at (4,2); 
+		
+		\draw[very thick] (prevL) -- (prevR);
+		\node[above left] at (prevL) {\(t_{prev}^{l}\)};
+		\node[below left] at (prevR) {\(t_{prev}^{r}\)};
+
+		\draw[very thick] (newL) -- (newR);
+		\node[above right] at (newL) {\(t_{neu}^{l/r}\)};
+		\node[above right] at (newR) {\(t_{neu}^{l/r}\)};
+		
+		\draw[blue, thick] (prevL) -- (newL) node[midway, left] {\(ll\)};
+		\draw[blue, thick] (prevR) -- (newR) node[midway, right] {\(rr\)};
+
+		\draw[red, dashed, thick] (prevL) -- (newR) node[midway, above left] {\(lr\)};
+		\draw[red, dashed, thick] (prevR) -- (newL) node[midway, above right] {\(rl\)};
+
+	\end{tikzpicture}
+    
+    \caption{Orientierungstest im Fall einer Bifurkation. Es sind zwei Tore \(t_{prev}\) und \(t_{neu}\) abgebildet. Ihre Pfosten sind durch die Linien \(ll, rr, lr\) und \(rl\) verbunden. Beide Linienpaare (\(ll,\,rr\) und \(lr,\,rl\)) schneiden sich nicht, sodass das neue Tor in beide Richtungen durchschossen werden kann.}
+\end{figure}
+
+
+Mit der Kombination des Winkeltests und des Orientierungstests ist der erste Teil des Algorithmus abgeschlossen. Es ist möglich, die richtige Reihenfolge der Tore zu überprüfen und alle Pfosten in linke und rechte Pfosten einzuteilen. In dem nächsten Kapitel wird erklärt, wie unwichtige Pfosten gelöscht und besonders wichtige Pfosten gefunden werden.
